@@ -9,25 +9,30 @@
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #e0f7fa, #fce4ec);
+    overflow-x: hidden;
     text-align: center;
     color: #333;
   }
+
   h1 {
     margin-top: 30px;
     font-size: 2.5em;
     color: #e91e63;
     animation: fadeIn 2s ease-in-out;
   }
+
   .message {
     font-size: 1.4em;
     margin-bottom: 30px;
     color: #555;
     animation: glow 3s infinite alternate;
   }
+
   @keyframes glow {
     from { text-shadow: 0 0 5px #ff80ab; }
     to { text-shadow: 0 0 20px #ff4081; }
   }
+
   .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -35,6 +40,7 @@
     gap: 20px;
     padding: 20px;
   }
+
   .gallery img {
     width: 280px;
     height: auto;
@@ -42,9 +48,11 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     transition: transform 0.3s;
   }
+
   .gallery img:hover {
     transform: scale(1.05);
   }
+
   footer {
     margin-top: 40px;
     padding: 10px;
@@ -53,9 +61,47 @@
     font-weight: bold;
     letter-spacing: 1px;
   }
+
+  /* Hiệu ứng fadeIn */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Trái tim bay */
+  .heart {
+    position: fixed;
+    bottom: -10px;
+    color: #ff4081;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+  }
+
+  /* Chữ chạy Bố cố lên */
+  .bo-co-len {
+    position: fixed;
+    top: 20px;
+    white-space: nowrap;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #d81b60;
+    animation: moveText 12s linear infinite;
+  }
+
+  @keyframes moveText {
+    from { left: 100%; }
+    to { left: -100%; }
+  }
+
+  .date {
+    margin-top: 10px;
+    color: #777;
+    font-style: italic;
   }
 </style>
 </head>
@@ -64,6 +110,8 @@
 <h1>💖 Chúc bố Phạm Đức Hằng mổ thành công 💖</h1>
 <p class="message">Gia đình luôn ở bên bố – mong bố mau hồi phục, mạnh khỏe và luôn vui vẻ!</p>
 
+<p class="date" id="today"></p>
+
 <div class="gallery">
   <img src="anh1.png" alt="Ảnh gia đình 1">
   <img src="anh2.png" alt="Ảnh gia đình 2">
@@ -71,7 +119,34 @@
   <img src="anh4.png" alt="Ảnh gia đình 4">
 </div>
 
-<footer>❤️ Con chúc bố mau khỏe lại, con yêu bố rất nhiều ❤️</footer>
+<footer>❤️ Con chúc bố mau khỏe lại, gia đình luôn yêu thương bố ❤️</footer>
+
+<!-- Chữ chạy -->
+<div class="bo-co-len">💪 Bố cố lên! Bố cố lên! 💪</div>
+
+<!-- Nhạc nền -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5b8cb4dc1e.mp3?filename=peaceful-piano-music-14080.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Hiển thị ngày hiện tại
+  const today = new Date();
+  const dateText = today.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('today').textContent = "📅 Hôm nay: " + dateText;
+
+  // Tạo hiệu ứng trái tim bay
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.textContent = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 6000);
+  }
+  setInterval(createHeart, 500);
+</script>
 
 </body>
 </html>
